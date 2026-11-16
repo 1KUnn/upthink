@@ -20,6 +20,10 @@ class SubtitleTests(unittest.TestCase):
 
     def test_original_punctuation_is_preserved(self):
         self.assertEqual(tools.reconcile("甲，乙", "甲乙。"), "甲，乙。")
+        result = tools.reconcile("增长4.6个百分点，1—8月", "增长4.6个百分点。1—8月！")
+        self.assertIn("4.6", result)
+        self.assertIn("1—8", result)
+        self.assertIn("，", result)
 
     def test_cross_segment_search_and_timing(self):
         with tempfile.TemporaryDirectory() as tmp:
